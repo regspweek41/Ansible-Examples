@@ -1,0 +1,27 @@
+---
+  - hosts: localhost
+    gather_facts: yes
+    tasks:
+    - include_role:
+        name:  setup/kubectl
+      vars:
+        kubectl:
+          os: "{{ install_os }}"
+          arch: "{{ install_arch }}"
+          bin_directory: "{{ bin_install_dir }}"
+      with_items: "{{ network.organizations }}"
+      when: item.tenant_type == 'projectA'
+    - include_role:
+        name:  setup/helm
+      vars:
+        helm:
+          os: "{{ install_os }}"
+          arch: "{{ install_arch }}"
+          bin_directory: "{{ bin_install_dir }}"
+      with_items: "{{ network.organizations }}"
+      when: item.tenant_type == 'projectA'
+    vars: #These variables can be overriden from the command line
+      privilege_escalate: false           #Default to NOT escalate to root privledges
+      install_os: "linux"                 #Default to linux OS
+      install_arch:  "amd64"              #Default to amd64 architecture
+      bin_install_dir:  "~/bin"           #Default to ~/bin install directory for binaries

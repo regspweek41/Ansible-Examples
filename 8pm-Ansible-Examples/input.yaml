@@ -1,0 +1,10 @@
+# This is a sample configuration file for SupplyChain App which has 5 nodes.
+network:
+  organizations:
+    - organization:
+      name: projectA
+      tenant_type: projectA
+      k8s:
+        region: "southeastasia"
+        context: "ado-aks-201"
+        config_file: "/home/azureuser/.kube/config"
